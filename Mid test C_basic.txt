@@ -1,0 +1,35 @@
+Cho bài toán bãi gửi xe 2 bánh (xe đạp và xe máy) không qua đêm.
+Thực hiện một chuỗi các truy vấn trên dữ liệu đã cho bao gồm:
+1. list: trả về danh sách xe trong bãi, theo thứ tự của input. Lưu ý chỉ trả về biển số.
+2. find: tìm xe có biển số <plate> có trong bãi hay không. Ví dụ: find 31K1-123.45: in ra chỉ số nếu tìm thấy, -1 nếu không tìm thấy
+3. in <hh:mm:ss> <plate>: lúc <hh:mm:ss> cho xe biển số <plate> vào. Ví dụ: in 31K1-123.45 trả về 0 nếu lỗi (xe đã có trong bãi), 1 nếu thành công
+4. out <hh:mm:ss> <plate>: lúc <hh:mm:ss> cho xe biển số <plate> ra. Ví dụ: out 31K1-123.45 trả về 0 nếu lỗi (xe không có trong bãi), 1 nếu thành công
+5. cnt-bicycle: đếm số xe đạp đang có trong bãi
+6. has-checkout <plate>: xác định xem xe biển số <plate> có phải đã gửi và đã lấy ra không (tính từ khi khởi động chương trình). Trả về -1 nếu xe chưa gửi hoặc đã gửi nhưng chưa được lấy ra.
+Example
+Cho bài toán bãi gửi xe 2 bánh (xe đạp và xe máy) không qua đêm.
+Thực hiện một chuỗi các truy vấn trên dữ liệu đã cho bao gồm:
+1. list: trả về danh sách xe trong bãi, theo thứ tự của input. Lưu ý chỉ trả về biển số.
+2. find: tìm xe có biển số <plate> có trong bãi hay không. Ví dụ: find 31K1-123.45: in ra chỉ số nếu tìm thấy, -1 nếu không tìm thấy
+3. in <hh:mm:ss> <plate>: lúc <hh:mm:ss> cho xe biển số <plate> vào. Ví dụ: in 31K1-123.45 trả về 0 nếu lỗi (xe đã có trong bãi), 1 nếu thành công
+4. out <hh:mm:ss> <plate>: lúc <hh:mm:ss> cho xe biển số <plate> ra. Ví dụ: out 31K1-123.45 trả về 0 nếu lỗi (xe không có trong bãi), 1 nếu thành công
+5. cnt-bicycle: đếm số xe đạp đang có trong bãi
+6. has-checkout <plate>: xác định xem xe biển số <plate> có phải đã gửi và đã lấy ra không (tính từ khi khởi động chương trình). Trả về -1 nếu xe chưa gửi hoặc đã gửi nhưng chưa được lấy ra.
+Example
+Input
+10:30:24 31K1-123.45
+11:30:24 xxxx-000.01
+*
+list
+in 11:32:00 29C1-324.32
+list
+cnt-bicycle
+***
+Output
+31K1-123.45
+xxxx-000.01
+1
+31K1-123.45
+xxxx-000.01
+29C1-324.32
+1
