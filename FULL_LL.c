@@ -232,6 +232,91 @@ void countSameScore(node* root) {
         printf("Score %.2lf: %d students\n", current_score, count);
     }
 }
+node* getTail(node* cur) {
+    while (cur != NULL && cur->next != NULL)
+        cur = cur->next;
+    return cur;
+}
+
+// Hàm phân chia danh sách liên kết dựa trên giá trị của pivot
+node* partition(node* head, node* end, node** newHead, node** newEnd) {
+    node* pivot = end;
+    node *prev = NULL, *cur = head, *tail = pivot;
+
+    // Trong khi vòng lặp hiện tại, chúng ta sẽ di chuyển các nút có giá trị nhỏ hơn pivot
+    // vào phía trước danh sách và các nút có giá trị lớn hơn hoặc bằng pivot vào phía sau
+    while (cur != pivot) {
+        if (cur->score < pivot->score) {
+            // Đây là nút đầu tiên có giá trị nhỏ hơn pivot
+            if ((*newHead) == NULL)
+                (*newHead) = cur;
+
+            prev = cur;
+            cur = cur->next;
+        } else { // Nếu nút hiện tại có giá trị lớn hơn hoặc bằng pivot
+            // Di chuyển nút hiện tại đến phía sau pivot
+            if (prev)
+                prev->next = cur->next;
+            node* tmp = cur->next;
+            cur->next = NULL;
+            tail->next = cur;
+            tail = cur;
+            cur = tmp;
+        }
+    }
+
+    // Nếu pivot là nút đầu tiên trong danh sách liên kết, thì nó là head mới
+    if ((*newHead) == NULL)
+        (*newHead) = pivot;
+
+    // Cập nhật newEnd đến nút cuối cùng của danh sách sau khi phân chia
+    (*newEnd) = tail;
+
+    // Trả về nút pivot
+    return pivot;
+}
+
+// Hàm đệ quy QuickSort
+node* quickSortRecur(node* head, node* end) {
+    // Cơ sở trường hợp: nếu head bằng NULL hoặc chỉ có một nút trong danh sách liên kết
+    if (!head || head == end)
+        return head;
+
+    node *newHead = NULL, *newEnd = NULL;
+
+    // Phân chia danh sách liên kết, newHead và newEnd sẽ được cập nhật
+    // bởi hàm partition
+    node* pivot = partition(head, end, &newHead, &newEnd);
+
+    // Nếu pivot không phải là nút đầu tiên, sắp xếp phần danh sách trước pivot
+    if (newHead != pivot) {
+        // Lưu lại nút trước pivot để ngắt danh sách
+        node* tmp = newHead;
+         while (tmp->next != pivot) {
+            tmp = tmp->next;
+        }
+        tmp->next = NULL;
+
+        // Sắp xếp danh sách trước pivot
+        newHead = quickSortRecur(newHead, tmp);
+
+        // Thay đổi next của nút cuối cùng của phần danh sách trước pivot để trỏ đến pivot
+        tmp = getTail(newHead);
+        tmp->next = pivot;
+    }
+
+    // Sắp xếp danh sách sau pivot
+    pivot->next = quickSortRecur(pivot->next, newEnd);
+
+    return newHead;
+}
+
+// Hàm chính để gọi QuickSort
+void quickSort(node** headRef) {
+    (*headRef) = quickSortRecur(*headRef, getTail(*headRef));
+    return;
+}
+
 int main(){
     node* root = NULL;
     //char line[100];
